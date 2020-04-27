@@ -6,23 +6,20 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class BaseClass {
-
 	public Properties prop;
 	public FileInputStream fin;
-
-	public BaseClass() {
-
+	
+	public BaseClass(){
+		
 		try {
 			prop = new Properties();
-			fin = new FileInputStream(System.getProperty("user.dir") + "//src/main/java/com/qa/config/properties.config");
+			fin = new FileInputStream(System.getProperty("user.dir")+"//src/main/java/com/qa/config/RestProperties.config");
+			System.out.println("Path of the Properties file is : "+System.getProperty("user.dir")+"//src/main/java/com/qa/config/RestProperties.config");
 			prop.load(fin);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
-	
-
 }

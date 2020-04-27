@@ -13,36 +13,37 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 public class RestClient {
-
-	// GET method
-	public void get(String url) throws ClientProtocolException, IOException {
 		
-		CloseableHttpClient httpClient = HttpClients.createDefault();
-		
-		HttpGet httpget = new HttpGet(url); // This is the Http get request object
-		CloseableHttpResponse responce = httpClient.execute(httpget);
-		
-		// Retrieving status code
-		int ststuscode = responce.getStatusLine().getStatusCode();
-		System.out.println("Status code : "+ststuscode);
-		
-		// Retrieving JSON responce
-		String responceString = EntityUtils.toString(responce.getEntity(), "UTF-8");
-		
-		JSONObject responcejasono = new JSONObject(responceString);
-		System.out.println("Responce JSON code from API "+responcejasono);
-		
-		// Retrieving Headderrs
-		Header[] hedderResponce = responce.getAllHeaders();
-		
-		HashMap<String, String> allHeaders = new HashMap<String, String>();
-		
-		for(Header header : hedderResponce){
-			allHeaders.put(header.getName(), header.getValue());
+	// This methods return the HttpGet responce 
+		public void get(String url) throws ClientProtocolException, IOException{
+			
+			CloseableHttpClient closableHttpClient = HttpClients.createDefault();
+			HttpGet httpget = new HttpGet(url);
+			CloseableHttpResponse responceOfRetRequest = closableHttpClient.execute(httpget);
+			
+			// retieveing the status code
+			int statusCode = responceOfRetRequest.getStatusLine().getStatusCode();
+			System.out.println("");
+			System.out.println("Status code is : "+statusCode);
+			
+			// Retrieving Http json Responce
+			String stringResponce = EntityUtils.toString(responceOfRetRequest.getEntity(), "UTF-8");
+			
+			JSONObject jsonobject = new JSONObject(stringResponce);
+			System.out.println("");
+			System.out.println("Json responce codw is : "+jsonobject);
+			
+			// Retrieving Headers
+			Header[] Headersarray = responceOfRetRequest.getAllHeaders();
+			
+			HashMap<String, String> allheaders = new HashMap<String, String>();
+			
+			for(Header header:Headersarray){
+				allheaders.put(header.getName(), header.getValue());
+				
+			}
+			System.out.println("");
+			System.out.println("Headers in the Responce is : "+allheaders);
+			System.out.println("");
 		}
-		
-		System.out.println("Headers Responce : "+allHeaders);
-
-		
-	}
 }
