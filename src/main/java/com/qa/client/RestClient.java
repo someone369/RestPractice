@@ -1,49 +1,44 @@
 package com.qa.client;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Map;
 
-import org.apache.http.Header;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 
 public class RestClient {
 		
-	// This methods return the HttpGet responce 
-		public void get(String url) throws ClientProtocolException, IOException{
+	// GET methods return the HttpGet responce 
+		public CloseableHttpResponse get(String url) throws ClientProtocolException, IOException{
 			
 			CloseableHttpClient closableHttpClient = HttpClients.createDefault();
-			HttpGet httpget = new HttpGet(url);
+			HttpGet httpget = new HttpGet(url);	// THis is the GET request
 			CloseableHttpResponse responceOfRetRequest = closableHttpClient.execute(httpget);
 			
-			// retieveing the status code
-			int statusCode = responceOfRetRequest.getStatusLine().getStatusCode();
-			System.out.println("");
-			System.out.println("Status code is : "+statusCode);
-			
-			// Retrieving Http json Responce
-			String stringResponce = EntityUtils.toString(responceOfRetRequest.getEntity(), "UTF-8");
-			
-			JSONObject jsonobject = new JSONObject(stringResponce);
-			System.out.println("");
-			System.out.println("Json responce codw is : "+jsonobject);
-			
-			// Retrieving Headers
-			Header[] Headersarray = responceOfRetRequest.getAllHeaders();
-			
-			HashMap<String, String> allheaders = new HashMap<String, String>();
-			
-			for(Header header:Headersarray){
-				allheaders.put(header.getName(), header.getValue());
-				
-			}
-			System.out.println("");
-			System.out.println("Headers in the Responce is : "+allheaders);
-			System.out.println("");
+			return responceOfRetRequest;
 		}
+		
+	// POST method is to update the exesisting data
+		public CloseableHttpResponse post(String url, String entityString, HashMap<String, String> hashmap) throws ClientProtocolException, IOException{
+			
+			CloseableHttpClient closableHttpClient = HttpClients.createDefault();
+			HttpPost httpPost = new HttpPost(url); // THis is the POST request
+			
+			httpPost.setEntity(new StringEntity(entityString));
+			
+			// for Headers
+			for(Map.Entry<String, String> entry : hashmap.entrySet()){
+				httpPost.addHeader(entry.getKey(), entry.getValue()); 
+			}
+			CloseableHttpResponse postResponce = closableHttpClient.execute(httpPost);
+			return postResponce;
+		}
+	
 }

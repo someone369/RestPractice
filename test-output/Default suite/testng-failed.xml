@@ -3,12 +3,12 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="com.qa.tests.RestTest">
+      <class name="com.qa.tests.POST_API_Test">
         <methods>
-          <include name="getResponce"/>
+          <include name="postApiTest"/>
           <include name="set"/>
         </methods>
-      </class> <!-- com.qa.tests.RestTest -->
+      </class> <!-- com.qa.tests.POST_API_Test -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

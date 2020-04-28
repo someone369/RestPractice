@@ -9,6 +9,12 @@ public class BaseClass {
 	public Properties prop;
 	public FileInputStream fin;
 	
+	public int STATUS_RESPONCE_CODE_200 = 200;
+	public int STATUS_RESPONCE_CODE_201 = 201;
+	public int STATUS_RESPONCE_CODE_404 = 404;
+	public int STATUS_RESPONCE_CODE_401 = 401;
+	public int STATUS_RESPONCE_CODE_500 = 500;
+	
 	public BaseClass(){
 		
 		try {
